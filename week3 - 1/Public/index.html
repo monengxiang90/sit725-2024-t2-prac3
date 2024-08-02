@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sit 725</title>
+    <!-- Import Google Icon Font -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Import materialize.css -->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<!-- Navbar -->
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Calculator</a>
+        <!-- Suitable for different screen -->
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="sass.html">Sass</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Welcome to My Web App</h1>
+    <p>This is a sample web calculator.</p>
+
+    <!-- Calculator Form -->
+    <div class="row">
+        <div class="input-field col s12">
+            <input id="num1" type="number" class="validate">
+            <label for="num1">Number 1</label>
+        </div>
+        <div class="input-field col s12">
+            <input id="num2" type="number" class="validate">
+            <label for="num2">Number 2</label>
+        </div>
+        <div class="col s12">
+            <a id="addBtn" class="waves-effect waves-light btn">Add</a>
+            <a id="subtractBtn" class="waves-effect waves-light btn">Subtract</a>
+            <a id="multiplyBtn" class="waves-effect waves-light btn">Multiply</a>
+            <a id="divideBtn" class="waves-effect waves-light btn">Divide</a>
+        </div>
+    </div>
+
+    <!-- Div to display result -->
+    <div id="resultContainer" class="section"></div>
+</div>
+
+<!--JavaScript at end of body for optimized loading-->
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    function calculate(operation) {
+        const num1 = $('#num1').val();
+        const num2 = $('#num2').val();
+
+        $.ajax({
+            url: '/calculate',
+            type: 'GET',
+            data: { num1, num2, operation },
+            success: function(response) {
+                $('#resultContainer').html(`<h5>Result: ${response}</h5>`);
+            },
+            error: function(error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+
+    $('#addBtn').click(function() {
+        calculate('add');
+    });
+
+    $('#subtractBtn').click(function() {
+        calculate('subtract');
+    });
+
+    $('#multiplyBtn').click(function() {
+        calculate('multiply');
+    });
+
+    $('#divideBtn').click(function() {
+        calculate('divide');
+    });
+});
+</script>
+</body>
+</html>
